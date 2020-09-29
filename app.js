@@ -1,9 +1,12 @@
 const express = require('express');
 const dotenv = require('dotenv'); //it will have all the config variables
+const connectDB = require('./config/db');
 
 //to load config
 dotenv.config({ path: './config/config.env' });
-//with the help of process.env i cnan use/access values from config
+
+connectDB();
+//with the help of process.env i can use/access values from config
 const PORT = process.env.PORT || 5000;
 
 const app = express();
