@@ -3,7 +3,7 @@ const dotenv = require('dotenv'); //it will have all the config variables
 const connectDB = require('./config/db');
 const morgan = require('morgan');
 // morgan is used for logging.. so in the prject at any time if any request will be made (even between different webpages) ,it will be displayed on the console
-
+const exphbs = require('express-handlebars');
 //to load config
 dotenv.config({ path: './config/config.env' });
 
@@ -17,4 +17,8 @@ if (process.env.NODE_ENV === 'development') {
 	//use midddleware
 	app.use(morgan('dev'));
 }
+//this will aloow us to use .hbs extension instead of .handlebards
+app.engine('.hbs', exphbs({ extname: '.hbs' }));
+app.set('view engine', '.hbs');
+
 app.listen(PORT, console.log(`server is running in ${process.env.NODE_ENV} mode on port ${PORT}`));
