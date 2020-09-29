@@ -18,7 +18,8 @@ if (process.env.NODE_ENV === 'development') {
 	app.use(morgan('dev'));
 }
 //this will aloow us to use .hbs extension instead of .handlebards
-app.engine('.hbs', exphbs({ extname: '.hbs' }));
+//defaultlayout will contain all the layouts which we dont want to repeat again and again,so all the other layouts will be wrapped inside this default layout
+app.engine('.hbs', exphbs({ defaultlayout: 'main', extname: '.hbs' }));
 app.set('view engine', '.hbs');
 
 app.listen(PORT, console.log(`server is running in ${process.env.NODE_ENV} mode on port ${PORT}`));
