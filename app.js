@@ -22,4 +22,7 @@ if (process.env.NODE_ENV === 'development') {
 app.engine('.hbs', exphbs({ defaultlayout: 'main', extname: '.hbs' }));
 app.set('view engine', '.hbs');
 
+//routes
+app.use('/', require('./routes/index'));
+
 app.listen(PORT, console.log(`server is running in ${process.env.NODE_ENV} mode on port ${PORT}`));
