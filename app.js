@@ -4,11 +4,12 @@ const dotenv = require('dotenv'); //it will have all the config variables
 const connectDB = require('./config/db');
 const morgan = require('morgan');
 // morgan is used for logging.. so in the prject at any time if any request will be made (even between different webpages) ,it will be displayed on the console
-
+const session = require('express-session');
+const passport = require('passport');
 const exphbs = require('express-handlebars');
 //to load config
 dotenv.config({ path: './config/config.env' });
-
+require('./config/passport')(passport); //passed the passport const to config/passport.js so that i can use it there
 connectDB();
 
 //with the help of process.env i can use/access values from config
@@ -25,6 +26,18 @@ if (process.env.NODE_ENV === 'development') {
 //defaultlayout will contain all the layouts which we dont want to repeat again and again,so all the other layouts will be wrapped inside this default layout
 app.engine('.hbs', exphbs({ defaultlayout: 'main', extname: '.hbs' }));
 app.set('view engine', '.hbs');
+
+app.use(
+	session({
+		secret: 'keyboard cat', //it can be anything
+		resave: false, //do not resave the session if nothing is changed
+		saveUninitialized: false, //do not create a session until nothing is stored in it
+	})
+);
+
+//passport middleware
+app.use(passport.initialize());
+app.use(passport.session()); //to work with passport sessions we need express-session
 
 //static public folder
 app.use(express.static(path.join(__dirname, 'public')));
