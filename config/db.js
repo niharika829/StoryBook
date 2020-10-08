@@ -10,7 +10,7 @@ const connectDB = async () => {
 		});
 		console.log(`mongoose connected : ${conn.connection.host}`);
 	} catch (err) {
-		console.log(err);
+		console.error(err);
 		process.exit(1);
 		//1 represent failure
 	}
