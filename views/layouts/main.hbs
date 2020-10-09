@@ -13,6 +13,8 @@
 </head>
 
 <body>
+    {{> _header}}
+    {{!-- way to add partials(that are suppose to be inserted --}}
     <div class="container">
         {{{body}}}
         {{!-- all the content that we place in body tag of any view will be wrapped inside the body tag of main.hbs i.e default layout --}}
@@ -20,6 +22,10 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        //inorder to use sidenav from materialize we have to initialize it first
+        M.Sidenav.init(document.querySelector('.sidenav'))
+    </script>
 </body>
 
 </html>
