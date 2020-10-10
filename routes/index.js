@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const Story = require('../models/Story')
 const { ensureAuth, ensureGuest } = require('../middleware/auth');
 //@description:- login landing page
 //@rooute :-  /
