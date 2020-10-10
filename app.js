@@ -1,12 +1,16 @@
 const path = require('path');
 const express = require('express');
+const mongoose = require('mongoose')
 const dotenv = require('dotenv'); //it will have all the config variables
 const connectDB = require('./config/db');
 const morgan = require('morgan');
 // morgan is used for logging.. so in the prject at any time if any request will be made (even between different webpages) ,it will be displayed on the console
 const session = require('express-session');
+//creating sessions
+const MongoStore = require('connect-mongo')(session)
 const passport = require('passport');
 const exphbs = require('express-handlebars');
+const { Mongoose } = require('mongoose');
 //to load config
 dotenv.config({ path: './config/config.env' });
 require('./config/passport')(passport); //passed the passport const to config/passport.js so that i can use it there
@@ -32,6 +36,7 @@ app.use(
 		secret: 'keyboard cat', //it can be anything
 		resave: false, //do not resave the session if nothing is changed
 		saveUninitialized: false, //do not create a session until nothing is stored in it
+		store: new MongoStore({mongooseConnection : mongoose.connection})
 	})
 );
 
