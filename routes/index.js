@@ -18,10 +18,17 @@ router.get('/', ensureGuest, (req, res) => {
 //@method :- GET
 
 router.get('/dashboard', ensureAuth, (req, res) => {
-	console.log(req.user);
-	res.render('dashboard',{
+	try {
+		const stories= Story.find({ user: req.user.id}).lean()
+		//in order to pass the values taken from NOSQL database to templates like hanflebar we have to convert the data into js object for that we use lean
+		console.log(req.user);
+		res.render('dashboard',{
 		name: req.user.firstName,
+		stories
 	});
+	} catch (err) {
+		console.error(err)
+	}
+	
 });
-
 module.exports = router;
