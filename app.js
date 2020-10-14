@@ -1,13 +1,13 @@
 const path = require('path');
 const express = require('express');
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 const dotenv = require('dotenv'); //it will have all the config variables
 const connectDB = require('./config/db');
 const morgan = require('morgan');
 // morgan is used for logging.. so in the prject at any time if any request will be made (even between different webpages) ,it will be displayed on the console
 const session = require('express-session');
 //creating sessions
-const MongoStore = require('connect-mongo')(session)
+const MongoStore = require('connect-mongo')(session);
 const passport = require('passport');
 const exphbs = require('express-handlebars');
 const { Mongoose } = require('mongoose');
@@ -20,6 +20,10 @@ connectDB();
 const PORT = process.env.PORT || 5000;
 
 const app = express();
+
+//body parser
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 if (process.env.NODE_ENV === 'development') {
 	//use midddleware
@@ -36,7 +40,7 @@ app.use(
 		secret: 'keyboard cat', //it can be anything
 		resave: false, //do not resave the session if nothing is changed
 		saveUninitialized: false, //do not create a session until nothing is stored in it
-		store: new MongoStore({mongooseConnection : mongoose.connection})
+		store: new MongoStore({ mongooseConnection: mongoose.connection }),
 	})
 );
 
