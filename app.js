@@ -30,11 +30,14 @@ if (process.env.NODE_ENV === 'development') {
 	app.use(morgan('dev'));
 }
 
-const { formatDate, stripTags, truncate } = require('./helpers/hbs');
+const { formatDate, stripTags, truncate, editIcon } = require('./helpers/hbs');
 
 //this will aloow us to use .hbs extension instead of .handlebards
 //defaultlayout will contain all the layouts which we dont want to repeat again and again,so all the other layouts will be wrapped inside this default layout
-app.engine('.hbs', exphbs({ helpers: { formatDate, stripTags, truncate }, defaultlayout: 'main', extname: '.hbs' }));
+app.engine(
+	'.hbs',
+	exphbs({ helpers: { formatDate, stripTags, truncate, editIcon }, defaultlayout: 'main', extname: '.hbs' })
+);
 app.set('view engine', '.hbs');
 
 app.use(
@@ -49,6 +52,12 @@ app.use(
 //passport middleware
 app.use(passport.initialize());
 app.use(passport.session()); //to work with passport sessions we need express-session
+
+//set global var
+app.use(function (req, res, next) {
+	res.locals.user = req.user || null;
+	next();
+});
 
 //static public folder
 app.use(express.static(path.join(__dirname, 'public')));
