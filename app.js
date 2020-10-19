@@ -30,13 +30,13 @@ if (process.env.NODE_ENV === 'development') {
 	app.use(morgan('dev'));
 }
 
-const { formatDate, stripTags, truncate, editIcon } = require('./helpers/hbs');
+const { formatDate, stripTags, truncate, editIcon, select } = require('./helpers/hbs');
 
 //this will aloow us to use .hbs extension instead of .handlebards
 //defaultlayout will contain all the layouts which we dont want to repeat again and again,so all the other layouts will be wrapped inside this default layout
 app.engine(
 	'.hbs',
-	exphbs({ helpers: { formatDate, stripTags, truncate, editIcon }, defaultlayout: 'main', extname: '.hbs' })
+	exphbs({ helpers: { formatDate, stripTags, truncate, editIcon, select }, defaultlayout: 'main', extname: '.hbs' })
 );
 app.set('view engine', '.hbs');
 
