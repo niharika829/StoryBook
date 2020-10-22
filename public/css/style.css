@@ -13,3 +13,7 @@ p {
 	margin: 10px !important;
 	/* to override materlialize css */
 }
+.btn-float {
+	float: left;
+	margin-right: 10px;
+}
