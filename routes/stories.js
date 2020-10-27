@@ -16,7 +16,7 @@ router.post('/', ensureAuth, async (req, res) => {
 		res.redirect('/dashboard');
 	} catch (err) {
 		console.log(err);
-		res.render('/error/500');
+		res.render('error/500');
 	}
 });
 
@@ -30,7 +30,7 @@ router.get('/', ensureAuth, async (req, res) => {
 		});
 	} catch (err) {
 		console.log(err);
-		res.render('/error/500');
+		res.render('error/500');
 	}
 });
 
