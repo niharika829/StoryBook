@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+
 const Story = require('../models/Story');
 const { ensureAuth, ensureGuest } = require('../middleware/auth');
 //@description:- login landing page
@@ -20,6 +21,7 @@ router.get('/', ensureGuest, (req, res) => {
 router.get('/dashboard', ensureAuth, async (req, res) => {
 	try {
 		const stories = await Story.find({ user: req.user.id }).lean();
+
 		//in order to pass the values taken from NOSQL database to templates like hanflebar we have to convert the data into js object for that we use lean
 		console.log(req.user);
 		res.render('dashboard', {

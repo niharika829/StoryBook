@@ -12,6 +12,7 @@ const methodOverride = require('method-override');
 const passport = require('passport');
 const exphbs = require('express-handlebars');
 const { Mongoose } = require('mongoose');
+
 //to load config
 dotenv.config({ path: './config/config.env' });
 require('./config/passport')(passport); //passed the passport const to config/passport.js so that i can use it there
