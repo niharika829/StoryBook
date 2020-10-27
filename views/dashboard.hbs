@@ -1,13 +1,13 @@
-<h1>DASHBOARD</h1>
+
 <h3>Good To See You {{name}}</h3>
-<p>Have A Look At Your Stories</p>
+
 {{#if stories}}
 <table class="striped">
     <thead>
         <tr>
-            <th>title</th>
-            <th>date</th>
-            <th>status</th>
+            <th>Title</th>
+            <th>Date</th>
+            <th>Status</th>
             <th></th>
         </tr>
     </thead>
@@ -18,7 +18,7 @@
             <td>{{formatDate createdAt 'LLLL'}}</td>
             <td>{{status}}</td>
             <td>
-                <a href="/stories/edit/{{_id}}" class="btn btn-float">
+                <a href="/stories/edit/{{_id}}" class="btn btn-float teal">
                     <i class="fas fa-edit"></i>
                 </a>
                 <form action="/stories/{{_id}}" method="post" id="delete-form">

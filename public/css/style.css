@@ -20,3 +20,17 @@ p {
 .img-small {
 	width: 180px;
 }
+.sidenav {
+	background-color: #adf802;
+	opacity: 0.8;
+}
+
+.nav-links:hover {
+	color: white;
+}
+#mobile-demo li:hover {
+	background-color: teal;
+}
+.forms {
+	background-color: #adf802;
+}

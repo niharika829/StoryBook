@@ -6,7 +6,7 @@ const Story = require('../models/Story');
 //@desc    add stories
 //@route   GET /stories/add
 router.get('/add', ensureAuth, (req, res) => {
-	res.render('stories/add');
+	res.render('stories/add', {});
 });
 //@desc    process form data
 //@route   POST /stories
@@ -14,15 +14,16 @@ router.post('/', ensureAuth, async (req, res) => {
 	try {
 		req.body.user = req.user.id;
 		await Story.create(req.body);
-		toast({
-			appID: 'com.squirrel.GitHubDesktop.GitHubDesktop',
+		const toastCreated = toast({
 			title: 'Koya',
-			message: 'Story Created',
+			appID: 'com.squirrel.GitHubDesktop.GitHubDesktop',
 			icon: 'D:\\Desktop\\25231.png',
+			message: 'Story Created',
+
 			attribution: 'Via Web',
 		}).catch((err) => console.error(err));
 
-		res.redirect('/dashboard');
+		if (toastCreated) res.redirect('/dashboard');
 	} catch (err) {
 		console.log(err);
 		res.statusCode = 500;
@@ -37,6 +38,8 @@ router.get('/', ensureAuth, async (req, res) => {
 		const stories = await Story.find({ status: 'public' }).populate('user').sort({ createdAt: 'desc' }).lean();
 		res.render('stories/index', {
 			stories,
+			text: 'Public Stories',
+			chipShow: 'show',
 		});
 	} catch (err) {
 		console.log(err);
@@ -56,9 +59,10 @@ router.get('/edit/:id', ensureAuth, async (req, res) => {
 		if (story.user != req.user.id) {
 			toast({
 				appID: 'com.squirrel.GitHubDesktop.GitHubDesktop',
+				icon: 'D:\\Desktop\\25231.png',
 				title: 'Koya',
 				message: 'You Are Not Creator Of The Story',
-				icon: 'D:\\Desktop\\25231.png',
+
 				attribution: 'Via Web',
 			}).catch((err) => console.error(err));
 
@@ -85,9 +89,10 @@ router.put('/:id', ensureAuth, async (req, res) => {
 		if (story.user != req.user.id) {
 			toast({
 				appID: 'com.squirrel.GitHubDesktop.GitHubDesktop',
+				icon: 'D:\\Desktop\\25231.png',
 				title: 'Koya',
 				message: 'You Are Not Creator Of The Story',
-				icon: 'D:\\Desktop\\25231.png',
+
 				attribution: 'Via Web',
 			}).catch((err) => console.error(err));
 			res.redirect('/stories');
@@ -96,15 +101,16 @@ router.put('/:id', ensureAuth, async (req, res) => {
 				new: true, //if not existing then create one
 				runValidators: true, //to make sure that the fields are valid
 			});
-			const toasty = toast({
+			const toastUpdate = toast({
 				appID: 'com.squirrel.GitHubDesktop.GitHubDesktop',
+				icon: 'D:\\Desktop\\25231.png',
 				title: 'Koya',
 				message: 'Story Updated',
-				icon: 'D:\\Desktop\\25231.png',
+
 				attribution: 'Via Web',
 			}).catch((err) => console.error(err));
 
-			if (toasty) {
+			if (toastUpdate) {
 				res.redirect('/dashboard');
 			}
 		}
@@ -119,15 +125,16 @@ router.put('/:id', ensureAuth, async (req, res) => {
 router.delete('/:id', ensureAuth, async (req, res) => {
 	try {
 		await Story.remove({ _id: req.params.id });
-		const toasty = toast({
+		const toastDelete = toast({
 			appID: 'com.squirrel.GitHubDesktop.GitHubDesktop',
-			title: 'Koya',
-			message: 'Story Deleted',
 			icon: 'D:\\Desktop\\25231.png',
+			title: 'Koya',
+			message: 'Story deleted',
+
 			attribution: 'Via Web',
 		}).catch((err) => console.error(err));
 
-		if (toasty) {
+		if (toastDelete) {
 			res.redirect('/dashboard');
 		}
 	} catch (err) {
@@ -167,16 +174,20 @@ router.get('/user/:userId', ensureAuth, async (req, res) => {
 			.populate('user')
 			.lean();
 
-		toast({
-			appID: 'com.squirrel.GitHubDesktop.GitHubDesktop',
+		const toastBy = toast({
 			title: 'Koya',
-			message: `Stories By ` + stories[0].user.displayName,
+			appID: 'com.squirrel.GitHubDesktop.GitHubDesktop',
 			icon: 'D:\\Desktop\\25231.png',
+			message: `Stories By ` + stories[0].user.displayName,
 			attribution: 'Via Web',
 		}).catch((err) => console.error(err));
-		res.render('stories/index', {
-			stories,
-		});
+		if (toastBy) {
+			res.render('stories/index', {
+				stories,
+				text: `Stories By ` + stories[0].user.displayName,
+				chipShow: '',
+			});
+		}
 	} catch (err) {
 		console.error(err);
 		res.statusCode = 500;

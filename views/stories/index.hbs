@@ -1,4 +1,4 @@
-<h3>stories</h3>
+<h3>{{text}}</h3>
 <div class="row">
     {{#each stories}}
     <div class="col s14 m4">
@@ -11,10 +11,14 @@
                 <h5>{{title}}</h5>
                 <p>{{stripTags (truncate body 170)}}</p>
                 <br>
+                {{#if ../chipShow}}
                 <div class="chip">
                     <img src="{{user.image}}">
                     <a href="stories/user/{{user._id}}">{{user.displayName}}</a>
                 </div>
+              {{else}}
+            <div>Enjoy!!</div>
+                {{/if}}
             </div>
             <div class="card-action center-align">
                 <a href="/stories/{{_id}}" class="btn grey">Read More</a>
