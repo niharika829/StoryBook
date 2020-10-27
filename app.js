@@ -79,6 +79,8 @@ app.use('/', require('./routes/index'));
 app.use('/auth', require('./routes/auth'));
 app.use('/stories', require('./routes/stories'));
 app.use('/Not-Found', function (req, res) {
+	res.statusCode = 404;
+
 	res.render('error/404');
 });
 app.get('/*', function (req, res) {

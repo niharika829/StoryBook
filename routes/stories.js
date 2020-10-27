@@ -16,6 +16,7 @@ router.post('/', ensureAuth, async (req, res) => {
 		res.redirect('/dashboard');
 	} catch (err) {
 		console.log(err);
+		res.statusCode = 500;
 		res.render('error/500');
 	}
 });
@@ -30,6 +31,7 @@ router.get('/', ensureAuth, async (req, res) => {
 		});
 	} catch (err) {
 		console.log(err);
+		res.statusCode = 500;
 		res.render('error/500');
 	}
 });
@@ -106,6 +108,7 @@ router.get('/:id', ensureAuth, async (req, res) => {
 		});
 	} catch (err) {
 		console.error(err);
+		res.statusCode = 404;
 		res.render('error/404');
 	}
 });
@@ -125,6 +128,7 @@ router.get('/user/:userId', ensureAuth, async (req, res) => {
 		});
 	} catch (err) {
 		console.error(err);
+		res.statusCode = 500;
 		res.render('error/500');
 	}
 });
