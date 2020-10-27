@@ -101,7 +101,9 @@ router.get('/:id', ensureAuth, async (req, res) => {
 			return res.render('error/404');
 		}
 
-		res.render('stories/show');
+		res.render('stories/show', {
+			story,
+		});
 	} catch (err) {
 		console.error(err);
 		res.render('error/404');
