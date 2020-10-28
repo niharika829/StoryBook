@@ -1,7 +1,9 @@
 const express = require('express');
 const passport = require('passport');
 const router = express.Router();
+//for notifications on user actions
 const toast = require('powertoast');
+
 // @desc    Auth with Google
 // @route   GET /auth/google
 router.get('/google', passport.authenticate('google', { scope: ['profile'] }));
@@ -9,6 +11,7 @@ router.get('/google', passport.authenticate('google', { scope: ['profile'] }));
 // @desc    Google auth callback
 // @route   GET /auth/google/callback
 router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
+	//notification displayed on successfull login
 	const toasty = toast({
 		appID: 'com.squirrel.GitHubDesktop.GitHubDesktop',
 		title: 'Koya',
@@ -23,6 +26,7 @@ router.get('/google/callback', passport.authenticate('google', { failureRedirect
 // @desc    Logout user
 // @route   GET /auth/logout
 router.get('/logout', (req, res) => {
+	//notification displayed on successfull logout
 	const toastify = toast({
 		appID: 'com.squirrel.GitHubDesktop.GitHubDesktop',
 		icon: 'D:\\Desktop\\25231.png',
@@ -31,6 +35,7 @@ router.get('/logout', (req, res) => {
 		attribution: 'Via Web',
 	}).catch((err) => console.error(err));
 	if (toastify) {
+		//to logout
 		req.logOut();
 		res.redirect('/');
 	}

@@ -1,6 +1,7 @@
 <h3>Edit Story</h3>
 <div class="row">
     <form action="/stories/{{story._id}}" method="post" class="col s12">
+    {{!-- hidden method PUT --}}
      <input type="hidden" name="_method" value="PUT">
         <div class="row">
             <div class="input-field">
@@ -12,6 +13,8 @@
         <div class="row">
             <div class="input-field">
                 <select name="status" id="status">
+                    {{!-- HANDLEBAR HELPER "select" with first param as actual status of the story(i.e story.status)
+                    and second param as the oprtions--}}
                     {{#select story.status}}
                     <option value="public" selected>Public</option>
                     <option value="private">Private</option>

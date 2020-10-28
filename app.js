@@ -27,7 +27,7 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-//so taht we can pass hidden methods like PUT and  DELETE ,while the form will be having a method as POST
+//so that we can pass hidden methods like PUT and  DELETE ,while the form will be having a method as POST
 app.use(
 	methodOverride(function (req, res) {
 		if (req.body && typeof req.body === 'object' && '_method' in req.body) {
@@ -46,7 +46,7 @@ if (process.env.NODE_ENV === 'development') {
 
 const { formatDate, stripTags, truncate, editIcon, select } = require('./helpers/hbs');
 
-//this will aloow us to use .hbs extension instead of .handlebards
+//this will aloow us to use .hbs extension instead of .handlebars
 //defaultlayout will contain all the layouts which we dont want to repeat again and again,so all the other layouts will be wrapped inside this default layout
 app.engine(
 	'.hbs',
@@ -67,7 +67,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session()); //to work with passport sessions we need express-session
 
-//set global var
+//set a var which can be accessed everywhere inside the application
 app.use(function (req, res, next) {
 	res.locals.user = req.user || null;
 	next();
@@ -75,6 +75,7 @@ app.use(function (req, res, next) {
 
 //static public folder
 app.use(express.static(path.join(__dirname, 'public')));
+
 //routes
 app.use('/', require('./routes/index'));
 app.use('/auth', require('./routes/auth'));
@@ -84,6 +85,7 @@ app.use('/Not-Found', function (req, res) {
 
 	res.render('error/404');
 });
+// any invalid route will be redirected to route "/Not-Found"
 app.get('/*', function (req, res) {
 	res.redirect('/Not-Found');
 });

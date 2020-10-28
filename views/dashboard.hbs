@@ -15,6 +15,7 @@
         {{#each stories}}
         <tr>
             <td><a href="/stories/{{_id}}">{{title}}</a></td>
+             {{!-- handlebar helper "formatDate" wiith params as (date,format)--}}
             <td>{{formatDate createdAt 'LLLL'}}</td>
             <td>{{status}}</td>
             <td>
@@ -22,6 +23,7 @@
                     <i class="fas fa-edit"></i>
                 </a>
                 <form action="/stories/{{_id}}" method="post" id="delete-form">
+                {{!-- hidden method delete  --}}
                       <input type="hidden" name="_method" value="DELETE">
                       <button type="submit" class="btn red">
                           <i class="fas fa-trash"></i>

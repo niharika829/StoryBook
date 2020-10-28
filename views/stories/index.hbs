@@ -1,16 +1,20 @@
 <h3>{{text}}</h3>
 <div class="row">
+    {{!-- for each loop --}}
     {{#each stories}}
     <div class="col s14 m4">
         <div class="card">
             <div class="card-image">
+                {{!-- handlebar helper "editIcon" with params as (creater_of_story , logged_in_user , story_id) --}}
                 {{{editIcon user ../user _id}}}
                 {{!-- to parse html with handlebars use triple curly braces not double --}}
             </div>
             <div class="card-content center-align">
                 <h5>{{title}}</h5>
+                {{!-- two helpers nester in one another --}}
                 <p>{{stripTags (truncate body 170)}}</p>
                 <br>
+                {{!-- if condition based on the value passed in chipShow during redirection --}}
                 {{#if ../chipShow}}
                 <div class="chip">
                     <img src="{{user.image}}">

@@ -1,19 +1,27 @@
 const express = require('express');
 const router = express.Router();
+//for notificatiion
 const toast = require('powertoast');
 const { ensureAuth } = require('../middleware/auth');
 const Story = require('../models/Story');
+
 //@desc    add stories
 //@route   GET /stories/add
 router.get('/add', ensureAuth, (req, res) => {
 	res.render('stories/add', {});
 });
-//@desc    process form data
+
+//@desc    process form data of add story page
 //@route   POST /stories
 router.post('/', ensureAuth, async (req, res) => {
 	try {
+		/*req.body has all the data which user provided , we fetch the user id from req.user.id
+		now we are adding a new key as user in req.body by using req.body.user,
+		and then provide req.user.id as a value to the new key i.e req.body.user */
 		req.body.user = req.user.id;
+		//created a new story
 		await Story.create(req.body);
+		//toats on successfull creation of story
 		const toastCreated = toast({
 			title: 'Koya',
 			appID: 'com.squirrel.GitHubDesktop.GitHubDesktop',
@@ -35,6 +43,7 @@ router.post('/', ensureAuth, async (req, res) => {
 //@route   GET /stories
 router.get('/', ensureAuth, async (req, res) => {
 	try {
+		//find all the stories that are public and fetch the data of user as well thats why we have used populate user
 		const stories = await Story.find({ status: 'public' }).populate('user').sort({ createdAt: 'desc' }).lean();
 		res.render('stories/index', {
 			stories,
@@ -48,7 +57,7 @@ router.get('/', ensureAuth, async (req, res) => {
 	}
 });
 
-//@desc    stories edit page
+//@desc    show stories edit page
 //@route   GET /stories/edit/:id
 router.get('/edit/:id', ensureAuth, async (req, res) => {
 	try {
@@ -56,6 +65,7 @@ router.get('/edit/:id', ensureAuth, async (req, res) => {
 		if (!story) {
 			return res.render('error/404');
 		}
+		//check if the creator of story that is suppose to be edited is same as the user who is logged in
 		if (story.user != req.user.id) {
 			toast({
 				appID: 'com.squirrel.GitHubDesktop.GitHubDesktop',
@@ -97,6 +107,7 @@ router.put('/:id', ensureAuth, async (req, res) => {
 			}).catch((err) => console.error(err));
 			res.redirect('/stories');
 		} else {
+			//findByIdAndUpdate will find the particular story and will update it according to the value given in req.body
 			story = await Story.findByIdAndUpdate({ _id: req.params.id }, req.body, {
 				new: true, //if not existing then create one
 				runValidators: true, //to make sure that the fields are valid
@@ -124,7 +135,9 @@ router.put('/:id', ensureAuth, async (req, res) => {
 //@route   DELETE /stories/id
 router.delete('/:id', ensureAuth, async (req, res) => {
 	try {
+		//remove will delete the particlar story
 		await Story.remove({ _id: req.params.id });
+		//toast at successfull deletion
 		const toastDelete = toast({
 			appID: 'com.squirrel.GitHubDesktop.GitHubDesktop',
 			icon: 'D:\\Desktop\\25231.png',
@@ -163,7 +176,7 @@ router.get('/:id', ensureAuth, async (req, res) => {
 		res.render('error/404');
 	}
 });
-// @desc    User stories
+// @desc    show particular User stories
 // @route   GET /stories/user/:userId
 router.get('/user/:userId', ensureAuth, async (req, res) => {
 	try {

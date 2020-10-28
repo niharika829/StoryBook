@@ -8,8 +8,10 @@ const connectDB = async () => {
 			useUnifiedTopology: true,
 			useFindAndModify: false,
 		});
+		//this will let us know about the host connection.
 		console.log(`mongoose connected : ${conn.connection.host}`);
 	} catch (err) {
+		//if connection was not made successfully
 		console.error(err);
 		process.exit(1);
 		//1 represent failure

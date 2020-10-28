@@ -5,9 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Koya App</title>
-     <link rel = "icon" href =  
-"image/koya.JPG" 
-        type = "image/x-icon"> 
+     <link rel = "icon" href = "image/koya.JPG" type = "image/x-icon"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
         integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
@@ -16,9 +14,10 @@
 </head>
 
 <body>
+    {{!-- way to add partials --}}
     {{> _header}}
     {{> _add_btn}}
-    {{!-- way to add partials(that are suppose to be inserted --}}
+   
     <div class="container">
         {{{body}}}
         {{!-- all the content that we place in body tag of any view will be wrapped inside the body tag of main.hbs i.e default layout --}}
